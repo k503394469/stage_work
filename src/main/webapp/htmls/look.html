@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>view</title>
+    <script src="../plugin/axios.js"></script>
+    <script src="../plugin/jquery.js"></script>
+    <script src="../plugin/vue.js"></script>
+    <script>
+        $(function () {
+            let app = new Vue({
+                el: "#app",
+                data: {
+                    users: []
+                },
+                header: {
+                    contentType: "application/json;charset=utf-8"
+                },
+                created() {
+                    axios.post("/stage_three/user/allUser").then(function (res) {
+                        app.users = res.data;
+                    });
+                },
+                methods:{
+                    del(id){
+                        axios.post("/stage_three/user/delUser/"+id).then(function () {
+                            location.reload();
+                        });
+                    },
+                    updateUI(id){
+                        location.href="/stage_three/htmls/updateUI.html?id="+id;
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="app">
+    <table id="user-info" style="border: 1px solid">
+        <tr>
+            <th><input type="checkbox"></th>
+            <th>ID</th>
+            <th>用户名</th>
+            <th>年龄</th>
+            <th>删除</th>
+            <th>修改</th>
+        </tr>
+        <tr v-for="user in users">
+            <td><input type="checkbox"></td>
+            <td>{{user.id}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.age}}</td>
+            <td><a href="#" @click="del(user.id)">del</a></td>
+            <td><a href="#" @click="updateUI(user.id)">update</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

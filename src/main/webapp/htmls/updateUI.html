@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../plugin/axios.js"></script>
+    <script src="../plugin/jquery.js"></script>
+    <script src="../plugin/vue.js"></script>
+    <script src="../plugin/getPara.js"></script>
+    <script>
+        $(function () {
+            var id = getPara('id');
+            let user = new Vue({
+                el:"#update-info",
+                data:{
+                    id:id,
+                    username:"",
+                    age:""
+                },
+                created(){
+                    axios.post("/stage_three/user/updateUser/"+id).then(function (userInfo) {
+                        user.username=userInfo.data.username;
+                        user.age=userInfo.data.age;
+                    })
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="update-info">
+<form action="" method="post" id="upUserForm">
+    username:<input type="text" name="username" id="username" :value="username"><br>
+    age:<input type="text" name="age" id="age" :value="age"><br>
+    <input type="submit" value="update">
+</form>
+</div>
+
+</body>
+</html>
