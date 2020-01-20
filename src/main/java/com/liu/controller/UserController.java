@@ -7,8 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -22,15 +25,21 @@ public class UserController {
         List<User> all = userService.findAll();
         return all;
     }
-    @RequestMapping("/delUser/{id}")
+    @RequestMapping(value = "/delUser/{id}")
     public String delUser(@PathVariable String id){
         userService.deleteById(Integer.parseInt(id));
         return "look";
     }
     @RequestMapping("/updateUI/{id}")
-    public String updateUI(Model model,@PathVariable Integer id){
-        userService.findById(id);
-        return "updateUI";
+    @ResponseBody
+    public User updateUI(@PathVariable Integer id){
+        return userService.findById(id);
     }
+    @RequestMapping("/updateUser")
+    public String updateUser(User user){
+        userService.updateUser(user);
+        return "redirect:/htmls/look.html";
+    }
+
 
 }

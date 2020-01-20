@@ -11,16 +11,20 @@
         $(function () {
             var id = getPara('id');
             let user = new Vue({
-                el:"#update-info",
-                data:{
-                    id:id,
-                    username:"",
-                    age:""
+                el: "#update-info",
+                data: {
+                    id: id,
+                    username: "",
+                    age: "",
+                    nullErr: ""
                 },
-                created(){
-                    axios.post("/stage_three/user/updateUser/"+id).then(function (userInfo) {
-                        user.username=userInfo.data.username;
-                        user.age=userInfo.data.age;
+                created() {
+                    axios.post("/stage_three/user/updateUI/" + id).then(function (userInfo) {
+                        if (userInfo.data == "" || userInfo.data.length == 0 || userInfo.data == null) {
+                            user.nullErr="查无此人";
+                        }
+                        user.username = userInfo.data.username;
+                        user.age = userInfo.data.age;
                     })
                 }
             });
@@ -29,11 +33,13 @@
 </head>
 <body>
 <div id="update-info">
-<form action="" method="post" id="upUserForm">
-    username:<input type="text" name="username" id="username" :value="username"><br>
-    age:<input type="text" name="age" id="age" :value="age"><br>
-    <input type="submit" value="update">
-</form>
+    <span id="err" style="color: red">{{nullErr}}</span>
+    <form action="/stage_three/user/updateUser" method="post" id="upUserForm">
+        <input type="hidden" name="id" :value="id">
+        username:<input type="text" name="username" id="username" :value="username"><br>
+        age:<input type="text" name="age" id="age" :value="age"><br>
+        <input type="submit" value="update">
+    </form>
 </div>
 
 </body>
