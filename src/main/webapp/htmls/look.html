@@ -11,6 +11,8 @@
             let app = new Vue({
                 el: "#app",
                 data: {
+                    pages:"",
+                    pageNum:"",
                     users: []
                 },
                 header: {
@@ -18,7 +20,11 @@
                 },
                 created() {
                     axios.post("/stage_three/user/allUser").then(function (res) {
-                        app.users = res.data;
+                        console.log(res)
+                        app.users = res.data.dataList;
+                        app.pageNum=res.data.pageNum;
+                        app.pages=res.data.pages;
+
                     });
                 },
                 methods:{
@@ -55,6 +61,7 @@
             <td><a href="#" @click="updateUI(user.id)">update</a></td>
         </tr>
     </table>
+
 </div>
 </body>
 </html>
