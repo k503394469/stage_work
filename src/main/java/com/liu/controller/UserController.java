@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -21,32 +19,39 @@ import java.util.TreeMap;
 public class UserController {
     @Autowired
     private UserService userService;
-    @RequestMapping(value = "/allUser",produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public Object allUser(@RequestParam(defaultValue = "1",name = "startPage") Integer startPage) {
-        Map<String,Object> pageMap=new TreeMap<>();
-        PageHelper.startPage(startPage,5);
+
+    @RequestMapping(value = "/allUser", produces = "application/json;charset=utf-8")
+//    @ResponseBody
+    public Object allUser(@RequestParam(defaultValue = "1", name = "startPage") Integer startPage, Model model) {
+        Map<String, Object> pageMap = new TreeMap<>();
+        PageHelper.startPage(startPage, 10);
         List<User> all = userService.findAll();
-        PageInfo<User> pageInfo=new PageInfo<>(all);
-        pageMap.put("pages",pageInfo.getPages());
-        pageMap.put("pageNum",pageInfo.getPageNum());
-        pageMap.put("dataList",pageInfo.getList());
-        return pageMap;
-    }
-    @RequestMapping(value = "/delUser/{id}")
-    public String delUser(@PathVariable String id){
-        userService.deleteById(Integer.parseInt(id));
+        PageInfo<User> pageInfo = new PageInfo<>(all);
+        pageMap.put("pages", pageInfo.getPages());
+        pageMap.put("pageNum", pageInfo.getPageNum());
+        pageMap.put("lastPage",pageInfo.getPrePage());
+        pageMap.put("nextPage",pageInfo.getNextPage());
+        pageMap.put("dataList", pageInfo.getList());
+        model.addAttribute("pageMap", pageMap);
         return "look";
     }
+
+    @RequestMapping(value = "/delUser/{id}")
+    public String delUser(@PathVariable String id) {
+        userService.deleteById(Integer.parseInt(id));
+        return "redirect:/user/allUser";
+    }
+
     @RequestMapping("/updateUI/{id}")
     @ResponseBody
-    public User updateUI(@PathVariable Integer id){
+    public User updateUI(@PathVariable Integer id) {
         return userService.findById(id);
     }
+
     @RequestMapping("/updateUser")
-    public String updateUser(User user){
+    public String updateUser(User user) {
         userService.updateUser(user);
-        return "redirect:/htmls/look.html";
+        return "redirect:/user/allUser";
     }
 
 

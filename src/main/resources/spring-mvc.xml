@@ -9,8 +9,19 @@
     </context:component-scan>
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler/>
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/htmls/"/>
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/htmls/"/>
+    </bean>
+    <bean id="htmlRes" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <!--<property name="prefix" value="/htmls/"/>-->
         <property name="suffix" value=".html"/>
+        <property name="order" value="0"/>
+        <property name="contentType" value="text/html;charset=utf-8"/>
+    </bean>
+    <bean id="jspRes" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
+        <property name="prefix" value="/jsps/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="order" value="0"/>
     </bean>
 </beans>
