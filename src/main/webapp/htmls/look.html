@@ -11,8 +11,8 @@
             let app = new Vue({
                 el: "#app",
                 data: {
-                    pages:"",
-                    pageNum:"",
+                    pages: "",
+                    pageNum: "",
                     users: []
                 },
                 header: {
@@ -22,19 +22,18 @@
                     axios.post("/stage_three/user/allUser").then(function (res) {
                         console.log(res)
                         app.users = res.data.dataList;
-                        app.pageNum=res.data.pageNum;
-                        app.pages=res.data.pages;
-
+                        app.pageNum = res.data.pageNum;
+                        app.pages = res.data.pages;
                     });
                 },
-                methods:{
-                    del(id){
-                        axios.post("/stage_three/user/delUser/"+id).then(function () {
+                methods: {
+                    del(id) {
+                        axios.post("/stage_three/user/delUser/" + id).then(function () {
                             location.reload();
                         });
                     },
-                    updateUI(id){
-                        location.href="/stage_three/htmls/updateUI.html?id="+id;
+                    updateUI(id) {
+                        location.href = "/stage_three/htmls/updateUI.html?id=" + id;
                     }
                 }
             });
@@ -61,7 +60,7 @@
             <td><a href="#" @click="updateUI(user.id)">update</a></td>
         </tr>
     </table>
-
+    <a v-for="ps in pages" :href="'/stage_three/user/allUser?startPage='+ps+''">{{ps}}&nbsp;&nbsp;&nbsp;</a>
 </div>
 </body>
 </html>
