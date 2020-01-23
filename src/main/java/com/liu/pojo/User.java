@@ -1,9 +1,20 @@
 package com.liu.pojo;
 
+import java.util.List;
+
 public class User {
     private Integer id;
     private String username;
     private Integer age;
+    private List<Account> accountList;
+
+    public List<Account> getAccountList() {
+        return accountList;
+    }
+
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
+    }
 
     public Integer getId() {
         return id;
@@ -27,14 +38,5 @@ public class User {
 
     public void setAge(Integer age) {
         this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", age=" + age +
-                '}';
     }
 }

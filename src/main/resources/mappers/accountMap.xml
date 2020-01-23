@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liu.dao.AccountDao">
+    <select id="findByNameAndPassword" resultType="account" parameterType="account">
+        select * from account
+        <where>
+            account_name=#{account_name} and password=#{password}
+        </where>
+    </select>
+</mapper>
