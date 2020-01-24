@@ -18,7 +18,7 @@ public class AccountController {
         Account loginUser = accountService.login(account);
         if (loginUser!=null){
             session.setAttribute("accountInfo",loginUser);
-            return "look";
+            return "redirect:/user/allUser";
         }else {
             return "redirect:/htmls/login.html";
         }

@@ -19,6 +19,10 @@
                 },
                 updateUI(id) {
                     location.href = "/stage_three/htmls/updateUI.html?id=" + id;
+                },
+                search(){
+                    let account_name = $("#name_search").val();
+
                 }
             }
         });
@@ -27,6 +31,7 @@
 </head>
 <body>
 <div id="app">
+    <input type="text" name="search" id="name_search"><button id="getName" @click="search()">查找</button>
     <table style="border: 1px solid">
         <tr>
             <th><input type="checkbox" name="checkAll"></th>
