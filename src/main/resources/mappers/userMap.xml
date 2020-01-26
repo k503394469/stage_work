@@ -33,4 +33,12 @@
         </if>
         where id=#{id}
     </update>
+    <select id="name_search" resultMap="userMap" parameterType="String">
+        select * from user
+        <where>
+            <if test="username!=null and username.length>0">
+                username like '%${username}%'
+            </if>
+        </where>
+    </select>
 </mapper>

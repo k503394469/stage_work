@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> name_search(String username) {
+        return userDao.name_search(username);
+    }
+
+    @Override
     public void deleteById(Integer id) {
         userDao.deleteById(id);
     }

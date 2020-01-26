@@ -52,6 +52,21 @@ public class UserController {
         userService.updateUser(user);
         return "redirect:/user/allUser";
     }
+    @RequestMapping("name_search")
+    public String name_search(@RequestParam(required = false) String username,@RequestParam(defaultValue = "1", name = "startPage") Integer startPage, Model model){
+        Map<String, Object> pageMap = new TreeMap<>();
+        PageHelper.startPage(startPage, 10);
+        List<User> userList = userService.name_search(username);
+        PageInfo<User> pageInfo = new PageInfo<>(userList);
+        pageMap.put("pages", pageInfo.getPages());
+        pageMap.put("pageNum", pageInfo.getPageNum());
+        pageMap.put("lastPage",pageInfo.getPrePage());
+        pageMap.put("nextPage",pageInfo.getNextPage());
+        pageMap.put("dataList", pageInfo.getList());
+        pageMap.put("username",username);
+        model.addAttribute("pageMap", pageMap);
+        return "look";
+    }
 
 
 }

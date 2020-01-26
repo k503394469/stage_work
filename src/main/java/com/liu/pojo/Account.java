@@ -5,6 +5,15 @@ public class Account {
     private String account_name;
     private String password;
     private Integer user_id;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Integer getAccount_id() {
         return account_id;
